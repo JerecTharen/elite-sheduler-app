@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="team-detail">
+        <ion-icon name="basketball"></ion-icon>
+        <ion-label>Team</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="standings">
+        <ion-icon name="podium"></ion-icon>
+        <ion-label>Standings</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

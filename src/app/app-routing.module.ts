@@ -4,17 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'my-teams',
     pathMatch: 'full'
   },
-  {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
-  },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  }
+  { path: 'game', loadChildren: './game/game.module#GamePageModule' },
+  { path: 'my-teams', loadChildren: './my-teams/my-teams.module#MyTeamsPageModule' },
+  { path: 'teams', loadChildren: './teams/teams.module#TeamsPageModule' },
+  { path: 'tournaments', loadChildren: './tournaments/tournaments.module#TournamentsPageModule' },
+  { path: 'team-home', loadChildren: './team-home/team-home.module#TeamHomePageModule' }
 ];
 
 @NgModule({
