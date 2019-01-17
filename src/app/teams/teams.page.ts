@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {NavController} from "@ionic/angular";
 import {Team} from "./team";
 import {SelectedTeamService} from "../selected-team.service";
+import {EliteAPIService} from "../shared/elite-api.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-teams',
@@ -9,14 +11,19 @@ import {SelectedTeamService} from "../selected-team.service";
   styleUrls: ['./teams.page.scss'],
 })
 export class TeamsPage implements OnInit {
-  private teams: Team[] = [
-    {id: 1, name: 'HC Elite'},
-    {id: 2, name: 'Team Takeover'},
-    {id: 3, name: 'DC Thunder'}
-  ];
-  constructor(private navCtrl: NavController, private selectedTeamService: SelectedTeamService) { }
+  private teams: Team[] = [];
+  constructor(
+      private navCtrl: NavController,
+      private selectedTeamService: SelectedTeamService,
+      private eliteAPI: EliteAPIService,
+      private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    const selectedTourney = this.route.snapshot.paramMap.get('id');
+    console.log(selectedTourney);
+    this.eliteAPI.getTournamentData(selectedTourney).subscribe(data => this.teams = data.teams);
+    console.log(this.teams);
   }
 
   goBack(): void{

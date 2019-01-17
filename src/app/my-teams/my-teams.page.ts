@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NavController} from "@ionic/angular";
+import {LoadingController, NavController} from "@ionic/angular";
 
 @Component({
   selector: 'app-my-teams',
@@ -8,12 +8,21 @@ import {NavController} from "@ionic/angular";
 })
 export class MyTeamsPage implements OnInit {
 
-  constructor(private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController, private loader: LoadingController) { }
 
   ngOnInit() {
   }
-  goToTournaments(){
-    this.navCtrl.navigateForward('tournaments');
+  // goToTournaments(){
+  //   this.navCtrl.navigateForward('tournaments');
+  // }
+
+  async goToTournaments() {
+    const loading = await this.loader.create({
+      message: 'Getting tournaments...'
+    });
+    loading.present().then(_ => {
+      this.navCtrl.navigateForward('tournaments');
+    });
   }
 
 }
