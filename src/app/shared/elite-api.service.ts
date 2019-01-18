@@ -10,7 +10,7 @@ import {map} from "rxjs/operators";
 })
 export class EliteAPIService {
 
-    currentTourney: any[];
+    currentTourney: any;
 
   constructor(private HttpClient: HttpClient) { }
 
@@ -18,15 +18,15 @@ export class EliteAPIService {
     return this.HttpClient.get<Tournament[]>(`${ environment.firebaseBaseUrl }/tournaments.json`);
   }
 
-    getTournamentData(tourneyId): Observable<any> {
-        return this.HttpClient.get(`${ environment.firebaseBaseUrl }/tournaments-data/${ tourneyId }.json`)
-            .pipe(
-                map(response => {
-                    this.currentTourney = response;
-                    return this.currentTourney;
-                })
-            );
-    }
+  getTournamentData(tourneyId): Observable<any> {
+    return this.HttpClient.get(`${ environment.firebaseBaseUrl }/tournaments-data/${ tourneyId }.json`)
+        .pipe(
+            map(response => {
+                this.currentTourney = response;
+                return this.currentTourney;
+            })
+        );
+  }
 
     getCurrentTourney() {
         return this.currentTourney;

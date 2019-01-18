@@ -1,16 +1,63 @@
+<!--<ion-header>-->
+  <!--<ion-toolbar color="primary">-->
+    <!--<ion-buttons slot="start">-->
+      <!--<ion-back-button (click)="goBack()"></ion-back-button>-->
+    <!--</ion-buttons>-->
+    <!--<ion-title>Team Detail</ion-title>-->
+  <!--</ion-toolbar>-->
+<!--</ion-header>-->
+
+<!--<ion-content padding>-->
+  <!--<ion-list>-->
+    <!--<ion-item *ngFor="let game of games">-->
+      <!--{{ game.opponent }}-->
+    <!--</ion-item>-->
+  <!--</ion-list>-->
+<!--</ion-content>-->
+
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()"></ion-back-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Team Detail</ion-title>
+    <ion-title>TeamDetail</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h2>Record: {{teamStanding?.wins}}-{{teamStanding?.losses}}</h2>
+            <p>Coach: {{team.coach}}</p>
+          </ion-col>
+          <ion-col>
+            <!--Placeholder-->
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
   <ion-list>
-    <ion-item *ngFor="let game of games">
-      {{ game.opponent }}
+    <ion-item *ngFor="let game of games" (click)="gameClicked($event, game)">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-3>
+            <p>{{game.time | date: 'M/d/yy'}}</p>
+            <p>{{game.time | date: 'shortTime'}}</p>
+          </ion-col>
+          <ion-col col-6>
+            <p>{{game.homeAway}} {{game.opponent}}</p>
+            <p>{{game.location}}</p>
+          </ion-col>
+          <ion-col col-3>
+            <h4>{{game.scoreDisplay}}</h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-list>
 </ion-content>
+

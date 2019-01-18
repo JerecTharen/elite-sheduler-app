@@ -7,9 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-list *ngFor="let team of teams">
-    <ion-item (click)="itemTapped(team)">{{team.name}}</ion-item>
+<ion-content>
+  <ion-list>
+    <ion-item-group *ngFor="let division of teams">
+      <ion-item-divider color="secondary">{{ division.divisionName }}</ion-item-divider>
+      <ion-item *ngFor="let team of division.divisionTeams" (click)="itemTapped(team)">
+        <ion-label>{{ team.name }}</ion-label>
+      </ion-item>
+    </ion-item-group>
   </ion-list>
-
 </ion-content>

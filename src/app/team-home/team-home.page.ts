@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NavController} from "@ionic/angular";
+import {LoadingController, NavController} from "@ionic/angular";
 import {SelectedTeamService} from "../selected-team.service";
 
 @Component({
@@ -9,9 +9,14 @@ import {SelectedTeamService} from "../selected-team.service";
 })
 export class TeamHomePage implements OnInit {
 
-  constructor(private navCtrl: NavController, private selectedTeamService: SelectedTeamService) { }
+  constructor(
+      private navCtrl: NavController,
+      private selectedTeamService: SelectedTeamService,
+      private loader: LoadingController
+  ) { }
 
   ngOnInit() {
+    this.loader.dismiss();
   }
 
   get name(): string{

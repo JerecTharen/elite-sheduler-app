@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {NavController} from "@ionic/angular";
+import {LoadingController, NavController} from "@ionic/angular";
 import {Team} from "./team";
 import {SelectedTeamService} from "../selected-team.service";
 import {EliteAPIService} from "../shared/elite-api.service";
 import {ActivatedRoute} from "@angular/router";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-teams',
@@ -12,18 +13,36 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class TeamsPage implements OnInit {
   private teams: Team[] = [];
+  private allTeams: Team[];
+  private allTeamDivisions: any;
   constructor(
       private navCtrl: NavController,
       private selectedTeamService: SelectedTeamService,
       private eliteAPI: EliteAPIService,
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private loader: LoadingController
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     const selectedTourney = this.route.snapshot.paramMap.get('id');
-    console.log(selectedTourney);
-    this.eliteAPI.getTournamentData(selectedTourney).subscribe(data => this.teams = data.teams);
-    console.log(this.teams);
+    const loading = await this.loader.create({
+      message: 'Getting data...'
+    });
+
+    loading.present().then(() => {
+      this.eliteAPI.getTournamentData(selectedTourney).subscribe(data => {
+        this.allTeams = data.teams;
+        this.allTeamDivisions = _
+            .chain(data.teams)
+            .groupBy('division')
+            .toPairs()
+            .map(item => _.zipObject(['divisionName', 'divisionTeams'], item))
+            .value();
+        this.teams = this.allTeamDivisions;
+        console.log('division teams', this.teams);
+        loading.dismiss();
+      });
+    });
   }
 
   goBack(): void{
