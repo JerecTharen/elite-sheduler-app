@@ -33,6 +33,8 @@ import { SelectedTeamService } from '../selected-team.service';
 import { Team } from '../teams/team';
 import { EliteAPIService } from '../shared/elite-api.service';
 import * as _ from 'lodash';
+// import {Moment} from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-team-detail',
@@ -44,6 +46,8 @@ export class TeamDetailPage implements OnInit {
   tourneyData: any;
   games: any[];
   teamStanding: any;
+  dateFilter: string;
+  allGames: any[];
 
   get team(): Team {
     return this.selectedTeam.team;
@@ -53,7 +57,7 @@ export class TeamDetailPage implements OnInit {
       private selectedTeam: SelectedTeamService,
       public eliteApi: EliteAPIService
   ) {
-    console.log('**nav params:', this.team.id);
+    // console.log('**nav params:', this.team.id);
   }
 
   ngOnInit() {
@@ -76,6 +80,8 @@ export class TeamDetailPage implements OnInit {
           };
         })
         .value();
+    this.allGames = this.games.slice();
+
 
     this.teamStanding = _.find(this.tourneyData.standings, {'teamId': this.team.id});
   }
@@ -89,6 +95,11 @@ export class TeamDetailPage implements OnInit {
     } else {
       return '';
     }
+  }
+
+  dateChanged(){
+  // console.log('dateChanged trigguured', this.dateFilter);
+  this.games = _.filter(this.allGames, g => moment(g.time).isSame(this.dateFilter, 'day'));
   }
 
 }

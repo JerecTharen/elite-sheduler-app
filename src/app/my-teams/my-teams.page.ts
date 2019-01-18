@@ -30,7 +30,7 @@ export class MyTeamsPage implements OnInit {
       private loader: LoadingController,
       private eliteAPI: EliteAPIService,
       private selectedTeam: SelectedTeamService,
-      // private router: Router
+      private router: Router
   ) {
 
   }
@@ -56,7 +56,7 @@ export class MyTeamsPage implements OnInit {
     loading.present().then(()=>{
       this.selectedTeam.team = item.team;
       this.eliteAPI.getTournamentData(item.tournamentId).subscribe(()=>{
-        this.navCtrl.navigate(['team-home',{id: item.tournamentId}]);
+        this.router.navigate(['team-home',{id: item.tournamentId}]);
       })
     });
   }
